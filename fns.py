@@ -43,13 +43,15 @@ def ict_read(path):
     return data.replace(-9999, np.nan) # Converts -9999 values to NaN
 
 
-def read_instr(instr, subset = None):
+def instr_read(instr, subset = None, dir='./inputs/ict/'):
     '''
-    Reads .ict files to a Pandas DataFrame
-    :param path: path to the .ict data
+    Reads group of .ict files with shared instrument code in pathname into a single Pandas DataFrame
+    :param instr: instrument code shared across .ict file names
+    :param subset: list of columns to exclude if there are any nan values
+    :param dir: directory containing the ict data
     :return: Pandas DataFrame with .ict data
     '''
-    paths = sorted(glob.glob('./inputs/ict/*'+instr+'*'))
+    paths = sorted(glob.glob(dir+'*'+instr+'*'))
     d_list = []
     for i in range(0, len(paths)):
         d_list.append(ict_read(paths[i]))
